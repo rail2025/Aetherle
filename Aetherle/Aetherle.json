@@ -1,0 +1,17 @@
+{
+    "Author": "rail",
+    "Name": "Aetherle",
+    "Punchline": "A daily FFXIV word puzzle game.",
+    "Description": "A Wordle-inspired game themed around Final Fantasy XIV terminology. Use /aetherle to play.",
+    "Changelog": "v0.1.0.0: Initial beta release wordle clone",
+    "InternalName": "Aetherle",
+    "AssemblyVersion": "0.1.0.0",
+    "RepoUrl": "https://github.com/rail2025/Aetherle",
+    "ApplicableVersion": "any",
+    "Tags": [
+        "game",
+        "puzzle",
+        "word",
+        "daily"
+    ]
+}

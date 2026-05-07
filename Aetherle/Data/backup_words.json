@@ -1,0 +1,26 @@
+{
+    "Characters": {
+        "5": [ "KRILE", "ZENOS", "GRAHA", "VENAT", "RUNAR" ],
+        "6": [ "TATARU", "YUGIRI", "MAGNAI", "CIRINA", "MATOYA" ],
+        "7": [ "ALISAIE", "YSHTOLA", "AYMERIC", "GOSETSU", "YOTSUYU" ],
+        "8": [ "THANCRED", "URIANGER", "MINFILIA", "ESTINIEN", "RAUBAHN" ]
+    },
+    "Bosses": {
+        "5": [ "SHIVA", "TITAN", "IFRIT", "RAMUH", "ANIMA" ],
+        "6": [ "GARUDA", "RAVANA", "SUSANO", "BYAKKO", "SUZAKU" ],
+        "7": [ "BAHAMUT", "LAKSHMI", "SHINRYU", "THORDAN", "TITANIA" ],
+        "8": [ "BISMARCK", "SEPHIROT", "DIABOLOS", "CAGNAZZO", "HYDAELYN" ]
+    },
+    "Terminology": {
+        "5": [ "COMBO", "PARTY", "QUEST", "GUILD", "LIMIT" ],
+        "6": [ "MINION", "SAVAGE", "AETHER", "MARKET", "DUTIES" ],
+        "7": [ "MATERIA", "EXTREME", "CHOCOBO", "GLAMOUR", "HOUSING" ],
+        "8": [ "ALLIANCE", "ULTIMATE", "ROULETTE", "RETAINER", "DUNGEONS" ]
+    },
+    "Items": {
+        "5": [ "ETHER", "TWINE", "ALLOY", "FLUID", "SYRUP" ],
+        "6": [ "ELIXIR", "LUMBER", "THREAD", "VELVET", "NUGGET" ],
+        "7": [ "CRYSTAL", "LEATHER", "FEATHER", "SPINDLE", "PIGMENT" ],
+        "8": [ "TOMESTONE", "NECKLACE", "BRACELET", "GRIMOIRE", "SABATONS" ]
+    }
+}

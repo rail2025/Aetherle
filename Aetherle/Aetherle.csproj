@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Dalamud.NET.Sdk/15.0.0">
+    <PropertyGroup>
+        <Authors>rail2025</Authors>
+        <Version>0.1.0.0</Version>
+        <Description>A simple word-guessing game based on Wordle, for FFXIV.</Description>
+        <PackageProjectUrl>https://github.com/rail2025/Aetherle</PackageProjectUrl>
+        <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+
+        <IsPackable>true</IsPackable>
+        <PathMap>$(MSBuildProjectDirectory)=$(AssemblyName)</PathMap>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="Data\**\*" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="repo.json" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+</Project>
