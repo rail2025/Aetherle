@@ -22,6 +22,10 @@ Type a guess and submit it.
 
 ## Disclaimer
 
-This is a fan-made plugin and is not affiliated with or endorsed by Square Enix, Wordle, or The New York Times
+Aetherle is inspired by the word guessing game Wordle.
+
+Wordle is a trademark and property of The New York Times Company. This project is not affiliated with, endorsed by, or connected to Wordle, The New York Times, or their respective owners.
+
+This is a fan-made plugin and is not affiliated with or endorsed by Square Enix.
 
 FINAL FANTASY XIV © SQUARE ENIX
