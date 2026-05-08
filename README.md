@@ -14,6 +14,8 @@ yellow - Correct letter, wrong position
 black - Letter not in the word
 
 ## How to use
+install custom repo
+https://raw.githubusercontent.com/rail2025/Aetherle/refs/heads/master/Aetherle/repo.json
 
 Open the plugin with:
 
