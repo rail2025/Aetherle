@@ -12,6 +12,9 @@ public class GridRenderer
 
         for (int row = 0; row < 6; row++)
         {
+            float totalWidth = (wordLength * cellSize) + ((wordLength - 1) * ImGui.GetStyle().ItemSpacing.X);
+            ImGui.SetCursorPosX((ImGui.GetWindowWidth() - totalWidth) * 0.5f);
+
             for (int col = 0; col < wordLength; col++)
             {
                 Vector4 bgColor = new Vector4(0.2f, 0.2f, 0.2f, 1f);

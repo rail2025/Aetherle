@@ -1,6 +1,8 @@
-using System;
-using System.Linq;
 using Aetherle.Core.Models;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Aetherle.Core.Services;
 
@@ -8,17 +10,65 @@ public class GameSessionService
 {
     private readonly Plugin plugin;
     private string targetWord = string.Empty;
+    public string TargetWord => targetWord;
+    public string CurrentCategory { get; private set; } = "Unknown";
     public GameState State { get; private set; } = new();
 
     public GameSessionService(Plugin plugin) => this.plugin = plugin;
 
-    public void StartNewSession(string word)
+    public void StartNewSession(string word, string category = "Daily")
     {
         targetWord = word.ToUpper();
-        State = new GameState();
+        CurrentCategory = category;
+        State = new GameState(targetWord);
     }
 
     public GameState GetCurrentState() => State;
+
+    public void StartRandomSession()
+    {
+        try
+        {
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            using var stream = assembly.GetManifestResourceStream("Aetherle.Data.backup_words.json");
+
+            if (stream == null)
+            {
+                StartNewSession("AETHER", "System");
+                return;
+            }
+
+            using var reader = new StreamReader(stream);
+            var jsonText = reader.ReadToEnd();
+            var data = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, List<string>>>>(jsonText);
+
+            if (data == null)
+            {
+                StartNewSession("AETHER", "System");
+                return;
+            }
+
+            var allWords = new List<(string Word, string Category)>();
+            foreach (var category in data)
+            {
+                foreach (var lengthGroup in category.Value)
+                {
+                    foreach (var word in lengthGroup.Value)
+                    {
+                        allWords.Add((word, category.Key));
+                    }
+                }
+            }
+
+            var rand = new Random();
+            var choice = allWords[rand.Next(allWords.Count)];
+            StartNewSession(choice.Word, choice.Category);
+        }
+        catch
+        {
+            StartNewSession("AETHER", "System");
+        }
+    }
 
     public void AddLetter(char c)
     {
@@ -64,6 +114,8 @@ public class GameSessionService
             }
 
             cfg.DailyGamesCompletions++;
+            cfg.LastPlayDate = DateTime.UtcNow;
+
             UpdateStats(State.IsWin);
         }
     }

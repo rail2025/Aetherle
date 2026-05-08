@@ -16,7 +16,10 @@ public class KeyboardRenderer
 
         foreach (var row in rows)
         {
-            float totalWidth = row.Length * 45f;
+            float spacing = ImGui.GetStyle().ItemSpacing.X;
+            float keyWidth = 32f;
+            float keyHeight = 40f;
+            float totalWidth = (row.Length * keyWidth) + ((row.Length - 1) * spacing);
             ImGui.SetCursorPosX((ImGui.GetWindowWidth() - totalWidth) * 0.5f);
 
             foreach (var c in row)
@@ -24,7 +27,7 @@ public class KeyboardRenderer
                 letterStates.TryGetValue(c, out var s);
 
                 ImGui.PushStyleColor(ImGuiCol.Button, GetColorForState(s));
-                if (ImGui.Button(c.ToString(), new Vector2(40, 45)))
+                if (ImGui.Button(c.ToString(), new Vector2(keyWidth, keyHeight)))
                 {
                     onKeyClick(c);
                 }

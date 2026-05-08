@@ -12,6 +12,11 @@ public class Guess
 public class GameState
 {
     public string CurrentGuess { get; set; } = string.Empty;
+    public string TargetWord { get; set; }
+    public GameState(string word = "")
+    {
+        TargetWord = word;
+    }
     public List<Guess> Guesses { get; set; } = new();
     public bool IsComplete { get; set; }
     public bool IsWin { get; set; }

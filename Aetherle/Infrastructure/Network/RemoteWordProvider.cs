@@ -23,7 +23,10 @@ public class RemoteWordProvider
         }
         catch
         {
-            var jsonText = await File.ReadAllTextAsync(Path.Combine("Data", "backup_words.json"));
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            using var stream = assembly.GetManifestResourceStream("Aetherle.Data.backup_words.json");
+            using var reader = new System.IO.StreamReader(stream!);
+            var jsonText = await reader.ReadToEndAsync();
             var data = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, List<string>>>>(jsonText);
 
             if (data == null)

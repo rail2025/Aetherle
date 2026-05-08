@@ -26,7 +26,7 @@ public class DailyPuzzleService
         }
         catch (Exception ex) when (ex is System.Net.Http.HttpRequestException or System.Text.Json.JsonException)
         {
-            var words = await this.data.LoadWordsFromFileAsync("backup_words.json");
+            var words = await this.data.LoadBackupWordsAsync();
 
             if (words.Count == 0)
             {

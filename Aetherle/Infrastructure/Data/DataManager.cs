@@ -10,21 +10,42 @@ namespace Aetherle.Infrastructure.Data;
 public class DataManager(string configDir)
 {
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
+    public string ConfigDirectory => configDirectory;
     private readonly string configDirectory = configDir;
     private readonly string cachePath = Path.Combine(configDir, "daily_cache.json");
+    private List<string> wordList = new();
 
-    public async Task<List<string>> LoadWordsFromFileAsync(string fileName)
+    public List<string> GetAllWords()
     {
-        string path = Path.Combine(this.configDirectory, fileName);
+        return this.wordList ?? new System.Collections.Generic.List<string>();
+    }
+
+    public async Task<List<string>> LoadBackupWordsAsync()
+    {
+        string path = Path.Combine(this.configDirectory, "backup_words.json");
         if (!File.Exists(path)) return new List<string>();
 
         try
         {
             var json = await File.ReadAllTextAsync(path);
-            return JsonSerializer.Deserialize<List<string>>(json, JsonOptions) ?? new List<string>();
+            var data = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, List<string>>>>(json, JsonOptions);
+
+            this.wordList.Clear();
+            if (data != null)
+            {
+                foreach (var category in data.Values)
+                {
+                    foreach (var lengthGroup in category.Values)
+                    {
+                        this.wordList.AddRange(lengthGroup);
+                    }
+                }
+            }
+            return this.wordList;
         }
-        catch (JsonException)
+        catch (Exception ex)
         {
+            Plugin.Log.Error($"Failed to load backup words: {ex.Message}");
             return new List<string>();
         }
     }

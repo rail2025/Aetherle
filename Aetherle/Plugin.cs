@@ -43,6 +43,9 @@ public sealed class Plugin : IDalamudPlugin
     {
         Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
 
+        Plugin.Log.Info($"CONFIG DIR: {PluginInterface.GetPluginConfigDirectory()}");
+        PluginInterface.SavePluginConfig(Configuration);
+
         Data = new DataManager(PluginInterface.GetPluginConfigDirectory());
         PuzzleService = new DailyPuzzleService(Data, new RemoteWordProvider());
 
@@ -75,6 +78,7 @@ public sealed class Plugin : IDalamudPlugin
 
     private async Task LoadInitialPuzzleAsync()
     {
+        await Data.LoadBackupWordsAsync(); 
         CurrentPuzzle = await PuzzleService.GetTodayPuzzleAsync();
         SessionService.StartNewSession(CurrentPuzzle.Word);
     }

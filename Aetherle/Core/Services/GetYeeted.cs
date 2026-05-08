@@ -9,7 +9,7 @@ public class GetYeeted
 {
     private readonly Plugin plugin;
     private static DateTime? YeetStartTime = null;
-    private const int YeetDelaySeconds = 5;
+    private const int YeetDelaySeconds = 10;
 
     public GetYeeted(Plugin plugin) => this.plugin = plugin;
 
@@ -22,11 +22,11 @@ public class GetYeeted
             cfg.DailyGamesCompletions = 0;
         }
 
-        if (cfg.DailyGamesCompletions < 5)
+        if (cfg.DailyGamesCompletions < 4)
         {
-            CenterButton("Restart", new Vector2(100, 30), restartAction);
+            CenterButton("Replay new word", new Vector2(100, 30), restartAction);
         }
-        else if (cfg.DailyGamesCompletions < 10)
+        else if (cfg.DailyGamesCompletions < 6)
         {
             CenterText("Stop playing this and go stretch and drink water.", new Vector4(1, 1, 1, 1));
 

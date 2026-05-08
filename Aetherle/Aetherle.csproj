@@ -13,6 +13,13 @@
 
     <ItemGroup>
         <Content Include="Data\**\*" CopyToOutputDirectory="PreserveNewest" />
+        <Content Remove="Data\allowed_guesses.json" />
+        <Content Remove="Data\backup_words.json" />
         <Content Include="repo.json" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Data\allowed_guesses.json" />
+      <EmbeddedResource Include="Data\backup_words.json" />
     </ItemGroup>
 </Project>
