@@ -9,14 +9,14 @@ public static class GuessEvaluator
     public static GuessResult Evaluate(string guess, string targetWord)
     {
         var results = new LetterState[guess.Length];
-        var targetSpan = targetWord.ToCharArray();
+        var targetChars = targetWord.ToCharArray();
 
         for (int i = 0; i < guess.Length; i++)
         {
             if (i < targetWord.Length && guess[i] == targetWord[i])
             {
                 results[i] = LetterState.Correct;
-                targetSpan[i] = '\0';
+                targetChars[i] = '\0';
             }
             else
             {
@@ -29,12 +29,12 @@ public static class GuessEvaluator
             if (results[i] == LetterState.Correct)
                 continue;
 
-            for (int j = 0; j < targetSpan.Length; j++)
+            for (int j = 0; j < targetChars.Length; j++)
             {
-                if (targetSpan[j] != '\0' && guess[i] == targetSpan[j])
+                if (targetChars[j] != '\0' && guess[i] == targetChars[j])
                 {
                     results[i] = LetterState.Present;
-                    targetSpan[j] = '\0';
+                    targetChars[j] = '\0';
                     break;
                 }
             }

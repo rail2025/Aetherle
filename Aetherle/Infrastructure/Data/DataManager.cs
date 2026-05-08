@@ -10,8 +10,7 @@ namespace Aetherle.Infrastructure.Data;
 public class DataManager(string configDir)
 {
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
-    public string ConfigDirectory => configDirectory;
-    private readonly string configDirectory = configDir;
+    public string ConfigDirectory => configDir;
     private readonly string cachePath = Path.Combine(configDir, "daily_cache.json");
     private List<string> wordList = new();
 
@@ -22,7 +21,7 @@ public class DataManager(string configDir)
 
     public async Task<List<string>> LoadBackupWordsAsync()
     {
-        string path = Path.Combine(this.configDirectory, "backup_words.json");
+        string path = Path.Combine(this.ConfigDirectory, "backup_words.json");
         if (!File.Exists(path)) return new List<string>();
 
         try
