@@ -4,7 +4,7 @@
         "Name": "Aetherle",
         "Punchline": "The daily word game for Eorzea.",
         "Description": "A word puzzle plugin for Final Fantasy XIV inspired by wordle. Features multiple themes and stat tracking.",
-        "Changelog": "v0.2.0.0: random loading\nv0.1.0.0: Initial beta release\n- API 15 / Patch 7.5 support\n- Core game loop implemented\n- Statistics and daily tracking",
+        "Changelog": "v0.2.0.0: bugs\nv0.1.0.0: Initial beta release\n- API 15 / Patch 7.5 support\n- Core game loop implemented\n- Statistics and daily tracking",
         "Tags": [
             "game",
             "puzzle",
