@@ -2,8 +2,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Aetherle.Core.Models;
-using Aetherle.Infrastructure.Network;
-using Aetherle.Infrastructure.Data;
+using Aetherle.Platform.Network;
+using Aetherle.Platform.Data;
 
 namespace Aetherle.Core.Services;
 

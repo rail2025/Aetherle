@@ -7,8 +7,8 @@ using Dalamud.Interface.Windowing;
 using Dalamud.Plugin.Services;
 using Aetherle.Core.Services;
 using Aetherle.Core.Models;
-using Aetherle.Infrastructure.Data;
-using Aetherle.Infrastructure.Network;
+using Aetherle.Platform.Data;
+using Aetherle.Platform.Network;
 using Aetherle.UI.Windows;
 
 namespace Aetherle;
@@ -50,7 +50,7 @@ public sealed class Plugin : IDalamudPlugin
         Data = new DataManager(PluginInterface.GetPluginConfigDirectory());
         PuzzleService = new DailyPuzzleService(Data, new RemoteWordProvider());
 
-        Infrastructure.Time.UtcResetService.CheckAndResetDailyLimits(Configuration);
+        Platform.Time.UtcResetService.CheckAndResetDailyLimits(Configuration);
         WindowSystem = new WindowSystem("Aetherle");
         ConfigWindow = new ConfigWindow(this);
         MainWindow = new MainWindow(this);

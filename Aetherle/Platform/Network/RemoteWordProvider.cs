@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Aetherle.Core.Models;
 
-namespace Aetherle.Infrastructure.Network;
+namespace Aetherle.Platform.Network;
 
 public class RemoteWordProvider
 {

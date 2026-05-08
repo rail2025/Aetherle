@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Aetherle.Infrastructure.Utilities;
+namespace Aetherle.Platform.Utilities;
 
 public static class WordNormalizer
 {

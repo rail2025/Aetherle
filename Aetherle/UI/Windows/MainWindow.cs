@@ -12,6 +12,15 @@ public class MainWindow : Window
     private readonly Plugin plugin;
     private readonly GridRenderer gridRenderer = new();
     private readonly KeyboardRenderer keyboardRenderer = new();
+
+    private readonly Vector4 colorPinkActive = new(1.0f, 0.08f, 0.58f, 1.0f);
+    private readonly Vector4 colorPinkBg = new(1.0f, 0.08f, 0.58f, 0.7f);
+    private readonly Vector4 colorWin = new(0.2f, 0.8f, 0.2f, 1f);
+    private readonly Vector4 colorLose = new(0.8f, 0.2f, 0.2f, 1f);
+    private readonly Vector4 colorLosePink = new(0f, 0f, 0f, 1f);
+
+    internal DateTime? yeetStartTime = null;
+
     public MainWindow(Plugin plugin) : base("Aetherle")
     {
         this.plugin = plugin;
@@ -26,8 +35,8 @@ public class MainWindow : Window
     {
         if (plugin.Configuration.HotPinkMode)
         {
-            ImGui.PushStyleColor(ImGuiCol.TitleBgActive, new Vector4(1.0f, 0.08f, 0.58f, 1.0f));
-            ImGui.PushStyleColor(ImGuiCol.WindowBg, new Vector4(1.0f, 0.08f, 0.58f, .7f));
+            ImGui.PushStyleColor(ImGuiCol.TitleBgActive, colorPinkActive);
+            ImGui.PushStyleColor(ImGuiCol.WindowBg, colorPinkBg);
         }
     }
 
@@ -70,8 +79,7 @@ public class MainWindow : Window
         if (state.IsComplete)
         {
             string msg = state.IsWin ? "Victory!" : $"Game Over. The word was {plugin.SessionService.TargetWord}";
-            Vector4 color = state.IsWin ? new Vector4(0.2f, 0.8f, 0.2f, 1f) :
-                (plugin.Configuration.HotPinkMode ? new Vector4(0f, 0f, 0f, 1f) : new Vector4(0.8f, 0.2f, 0.2f, 1f));
+            Vector4 color = state.IsWin ? colorWin : (plugin.Configuration.HotPinkMode ? colorLosePink : colorLose);
 
             ImGui.SetCursorPosX((ImGui.GetWindowWidth() - ImGui.CalcTextSize(msg).X) * 0.5f);
             ImGui.TextColored(color, msg);
@@ -112,8 +120,7 @@ public class MainWindow : Window
 
             ImGui.Spacing();
 
-            GetYeeted.CheckStatus(
-                plugin,
+            plugin.GetYeeted.CheckStatus(
                 () => plugin.SessionService.StartRandomSession(),
                 () => this.IsOpen = false
             );

@@ -1,6 +1,6 @@
 using System;
 
-namespace Aetherle.Infrastructure.Time;
+namespace Aetherle.Platform.Time;
 
 public class UtcResetService
 {

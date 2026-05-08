@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Aetherle.Core.Models;
 
-namespace Aetherle.Infrastructure.Data;
+namespace Aetherle.Platform.Data;
 
 public class DataManager
 {
