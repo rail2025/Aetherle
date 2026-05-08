@@ -1,5 +1,6 @@
 using Aetherle.Core.Models;
 using Dalamud.Bindings.ImGui;
+using Aetherle;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -10,17 +11,31 @@ public class KeyboardRenderer
 {
     private readonly string[] rows = { "QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM" };
 
-    public void Draw(GameState state, Action<char> onKeyClick)
+    public void Draw(Plugin plugin, GameState state, Action<char> onKeyClick)
     {
         var letterStates = GetLetterStates(state);
 
-        foreach (var row in rows)
+        float spacing = ImGui.GetStyle().ItemSpacing.X;
+        float keyWidth = 32f;
+        float keyHeight = 40f;
+
+        for (int i = 0; i < rows.Length; i++)
         {
-            float spacing = ImGui.GetStyle().ItemSpacing.X;
-            float keyWidth = 32f;
-            float keyHeight = 40f;
-            float totalWidth = (row.Length * keyWidth) + ((row.Length - 1) * spacing);
-            ImGui.SetCursorPosX((ImGui.GetWindowWidth() - totalWidth) * 0.5f);
+            var row = rows[i];
+            float rowWidth = (row.Length * keyWidth) + ((row.Length - 1) * spacing);
+
+            if (i == 2) rowWidth += (keyWidth * 3f) + (spacing * 2);
+
+            ImGui.SetCursorPosX((ImGui.GetWindowWidth() - rowWidth) * 0.5f);
+
+            if (i == 2)
+            {
+                if (ImGui.Button("ENTER", new Vector2(keyWidth * 1.5f, keyHeight)))
+                {
+                    plugin.SessionService.SubmitGuess();
+                }
+                ImGui.SameLine();
+            }
 
             foreach (var c in row)
             {
@@ -33,6 +48,14 @@ public class KeyboardRenderer
                 }
                 ImGui.PopStyleColor();
                 ImGui.SameLine();
+            }
+
+            if (i == 2)
+            {
+                if (ImGui.Button("BACK", new Vector2(keyWidth * 1.5f, keyHeight)))
+                {
+                    plugin.SessionService.RemoveLetter();
+                }
             }
             ImGui.NewLine();
         }

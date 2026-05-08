@@ -105,7 +105,7 @@ public class MainWindow : Window
             ImGui.Spacing();
         }
 
-        keyboardRenderer.Draw(state, c => plugin.SessionService.AddLetter(c));
+        keyboardRenderer.Draw(plugin, state, c => plugin.SessionService.AddLetter(c));
 
         if (ImGui.IsKeyPressed(ImGuiKey.Enter)) plugin.SessionService.SubmitGuess();
         if (ImGui.IsKeyPressed(ImGuiKey.Backspace)) plugin.SessionService.RemoveLetter();
