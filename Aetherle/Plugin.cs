@@ -38,6 +38,7 @@ public sealed class Plugin : IDalamudPlugin
     public DailyPuzzleService PuzzleService { get; init; }
     public GetYeeted GetYeeted { get; init; }
     public DataManager Data { get; init; }
+    public Core.Rules.GuessValidator Validator { get; init; } = new();
 
     public Plugin()
     {
@@ -78,6 +79,7 @@ public sealed class Plugin : IDalamudPlugin
 
     private async Task LoadInitialPuzzleAsync()
     {
+        await Validator.LoadDictionaryAsync();
         await Data.LoadBackupWordsAsync(); 
         CurrentPuzzle = await PuzzleService.GetTodayPuzzleAsync();
         SessionService.StartNewSession(CurrentPuzzle.Word);

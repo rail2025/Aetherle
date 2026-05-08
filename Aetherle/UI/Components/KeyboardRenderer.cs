@@ -14,6 +14,7 @@ public class KeyboardRenderer
     public void Draw(Plugin plugin, GameState state, Action<char> onKeyClick)
     {
         var letterStates = GetLetterStates(state);
+        bool hotPink = plugin.Configuration.HotPinkMode;
 
         float spacing = ImGui.GetStyle().ItemSpacing.X;
         float keyWidth = 32f;
@@ -41,7 +42,7 @@ public class KeyboardRenderer
             {
                 letterStates.TryGetValue(c, out var s);
 
-                ImGui.PushStyleColor(ImGuiCol.Button, GetColorForState(s));
+                ImGui.PushStyleColor(ImGuiCol.Button, GetColorForState(s, hotPink));
                 if (ImGui.Button(c.ToString(), new Vector2(keyWidth, keyHeight)))
                 {
                     onKeyClick(c);
@@ -77,9 +78,9 @@ public class KeyboardRenderer
         return results;
     }
 
-    private static Vector4 GetColorForState(LetterState state) => state switch
+    private static Vector4 GetColorForState(LetterState state, bool hotPink) => state switch
     {
-        LetterState.Correct => new Vector4(0.32f, 0.61f, 0.33f, 1f),
+        LetterState.Correct => hotPink ? new Vector4(1.0f, 0.08f, 0.58f, 1f) : new Vector4(0.32f, 0.61f, 0.33f, 1f),
         LetterState.Present => new Vector4(0.78f, 0.7f, 0.31f, 1f),
         LetterState.Absent => new Vector4(0.22f, 0.22f, 0.23f, 1f),
         _ => new Vector4(0.5f, 0.5f, 0.5f, 1f)

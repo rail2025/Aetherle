@@ -52,8 +52,4 @@ public class DailyPuzzleService
         }
     }
 
-    public static int GetDeterministicSeed()
-    {
-        return Math.Abs(DateTime.UtcNow.Date.GetHashCode());
-    }
 }

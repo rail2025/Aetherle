@@ -15,11 +15,29 @@ public class GuessValidator
     {
         try
         {
-            var jsonText = await File.ReadAllTextAsync(@"Data\allowed_guesses.json");
-            var words = JsonSerializer.Deserialize<List<string>>(jsonText);
-            if (words != null)
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            using var stream = assembly.GetManifestResourceStream("Aetherle.Data.allowed_guesses.json");
+
+            if (stream == null) return;
+
+            using var reader = new StreamReader(stream);
+            var jsonText = await reader.ReadToEndAsync();
+
+            var data = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, List<string>>>>(jsonText);
+
+            allowedGuesses.Clear();
+            if (data != null)
             {
-                allowedGuesses = new HashSet<string>(words, StringComparer.OrdinalIgnoreCase);
+                foreach (var category in data.Values)
+                {
+                    foreach (var lengthGroup in category.Values)
+                    {
+                        foreach (var word in lengthGroup)
+                        {
+                            allowedGuesses.Add(word);
+                        }
+                    }
+                }
             }
         }
         catch

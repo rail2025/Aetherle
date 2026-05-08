@@ -34,18 +34,25 @@ public class RemoteWordProvider
                 return new DailyPuzzle { Word = "AETHER", Metadata = new PuzzleMetadata { Category = "System", WordLength = 6 } };
             }
 
-            var wordListWithCategories = data.SelectMany(categoryItem =>
-                categoryItem.Value?.SelectMany(lengthItem =>
-                    lengthItem.Value?.Select(wordText => new { Category = categoryItem.Key, Word = wordText }) ?? Enumerable.Empty<dynamic>()
-                ) ?? Enumerable.Empty<dynamic>()
-            ).ToList();
+            var wordListWithCategories = new List<(string Category, string Word)>();
+            foreach (var category in data)
+            {
+                foreach (var lengthGroup in category.Value)
+                {
+                    foreach (var word in lengthGroup.Value)
+                    {
+                        wordListWithCategories.Add((category.Key, word));
+                    }
+                }
+            }
 
             if (wordListWithCategories.Count == 0)
             {
                 return new DailyPuzzle { Word = "AETHER", Metadata = new PuzzleMetadata { Category = "System", WordLength = 6 } };
             }
 
-            int index = Math.Abs(DateTime.UtcNow.Date.GetHashCode()) % wordListWithCategories.Count;
+            int dayOffset = (int)(DateTime.UtcNow.Date - new DateTime(2024, 1, 1)).TotalDays;
+            int index = dayOffset % wordListWithCategories.Count;
             var chosenWord = wordListWithCategories[index];
 
             return new DailyPuzzle

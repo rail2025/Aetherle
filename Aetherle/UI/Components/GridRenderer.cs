@@ -6,7 +6,7 @@ namespace Aetherle.UI.Components;
 
 public class GridRenderer
 {
-    public static void Draw(GameState state, int wordLength)
+    public static void Draw(GameState state, int wordLength, bool hotPink)
     {
         float cellSize = 50f;
 
@@ -24,7 +24,7 @@ public class GridRenderer
                 {
                     var guessLetter = state.Guesses[row].Letters[col];
                     letter = guessLetter.Value;
-                    bgColor = GetColorForState(guessLetter.State);
+                    bgColor = GetColorForState(guessLetter.State, hotPink);
                 }
                 else if (row == state.Guesses.Count && col < state.CurrentGuess.Length)
                 {
@@ -55,9 +55,9 @@ public class GridRenderer
         ImGui.Dummy(new Vector2(size, size));
     }
 
-    private static Vector4 GetColorForState(LetterState state) => state switch
+    private static Vector4 GetColorForState(LetterState state, bool hotPink) => state switch
     {
-        LetterState.Correct => new Vector4(0.32f, 0.61f, 0.33f, 1f),
+        LetterState.Correct => hotPink ? new Vector4(1.0f, 0.08f, 0.58f, 1f) : new Vector4(0.32f, 0.61f, 0.33f, 1f),
         LetterState.Present => new Vector4(0.78f, 0.7f, 0.31f, 1f),
         LetterState.Absent => new Vector4(0.22f, 0.22f, 0.23f, 1f),
         _ => new Vector4(0.12f, 0.12f, 0.13f, 1f)

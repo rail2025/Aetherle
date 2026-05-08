@@ -22,6 +22,23 @@ public class MainWindow : Window
         };
     }
 
+    public override void PreDraw()
+    {
+        if (plugin.Configuration.HotPinkMode)
+        {
+            ImGui.PushStyleColor(ImGuiCol.TitleBgActive, new Vector4(1.0f, 0.08f, 0.58f, 1.0f));
+            ImGui.PushStyleColor(ImGuiCol.WindowBg, new Vector4(1.0f, 0.08f, 0.58f, .7f));
+        }
+    }
+
+    public override void PostDraw()
+    {
+        if (plugin.Configuration.HotPinkMode)
+        {
+            ImGui.PopStyleColor(2);
+        }
+    }
+
     public override void Draw()
     {
         if (plugin.CurrentPuzzle == null || string.IsNullOrEmpty(plugin.CurrentPuzzle.Word))
@@ -44,7 +61,7 @@ public class MainWindow : Window
         ImGui.TextColored(new Vector4(0.5f, 0.5f, 0.5f, 1), $"Category: {plugin.SessionService.CurrentCategory}");
         ImGui.Spacing();
 
-        GridRenderer.Draw(state, plugin.SessionService.TargetWord.Length);
+        GridRenderer.Draw(state, plugin.SessionService.TargetWord.Length, plugin.Configuration.HotPinkMode);
 
         ImGui.Spacing();
         ImGui.Separator();
@@ -53,7 +70,8 @@ public class MainWindow : Window
         if (state.IsComplete)
         {
             string msg = state.IsWin ? "Victory!" : $"Game Over. The word was {plugin.SessionService.TargetWord}";
-            Vector4 color = state.IsWin ? new Vector4(0.2f, 0.8f, 0.2f, 1) : new Vector4(0.8f, 0.2f, 0.2f, 1);
+            Vector4 color = state.IsWin ? new Vector4(0.2f, 0.8f, 0.2f, 1f) :
+                (plugin.Configuration.HotPinkMode ? new Vector4(0f, 0f, 0f, 1f) : new Vector4(0.8f, 0.2f, 0.2f, 1f));
 
             ImGui.SetCursorPosX((ImGui.GetWindowWidth() - ImGui.CalcTextSize(msg).X) * 0.5f);
             ImGui.TextColored(color, msg);
@@ -107,7 +125,7 @@ public class MainWindow : Window
 
         keyboardRenderer.Draw(plugin, state, c => plugin.SessionService.AddLetter(c));
 
-        if (ImGui.IsKeyPressed(ImGuiKey.Enter)) plugin.SessionService.SubmitGuess();
-        if (ImGui.IsKeyPressed(ImGuiKey.Backspace)) plugin.SessionService.RemoveLetter();
+        //if (ImGui.IsKeyPressed(ImGuiKey.Enter)) plugin.SessionService.SubmitGuess();
+        //if (ImGui.IsKeyPressed(ImGuiKey.Backspace)) plugin.SessionService.RemoveLetter();
     }
 }

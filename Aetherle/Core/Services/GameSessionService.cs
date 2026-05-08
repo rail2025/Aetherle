@@ -85,17 +85,14 @@ public class GameSessionService
     public void SubmitGuess()
     {
         if (State.IsComplete || State.CurrentGuess.Length != targetWord.Length) return;
+        if (!plugin.Validator.IsValidGuess(State.CurrentGuess)) return;
 
+        var evaluation = Aetherle.Core.Rules.GuessEvaluator.Evaluate(State.CurrentGuess, targetWord);
         var guess = new Guess();
-        for (int i = 0; i < targetWord.Length; i++)
+
+        foreach (var letterResult in evaluation.Letters)
         {
-            char c = State.CurrentGuess[i];
-            LetterState s = LetterState.Absent;
-
-            if (c == targetWord[i]) s = LetterState.Correct;
-            else if (targetWord.Contains(c)) s = LetterState.Present;
-
-            guess.Letters.Add(new Letter(c, s));
+            guess.Letters.Add(new Letter(letterResult.Letter, letterResult.State));
         }
 
         State.Guesses.Add(guess);
