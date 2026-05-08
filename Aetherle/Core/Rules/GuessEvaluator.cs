@@ -39,11 +39,15 @@ public static class GuessEvaluator
             }
         }
 
-        var letterResults = guess.Select((c, i) => new LetterResult
+        var letterResults = new List<LetterResult>(guess.Length);
+        for (int i = 0; i < guess.Length; i++)
         {
-            Letter = c,
-            State = results[i]
-        }).ToList();
+            letterResults.Add(new LetterResult
+            {
+                Letter = guess[i],
+                State = results[i]
+            });
+        }
 
         return new GuessResult
         {

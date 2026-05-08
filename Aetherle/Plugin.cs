@@ -25,14 +25,14 @@ public sealed class Plugin : IDalamudPlugin
     private const string CommandName = "/aetherle";
 
     public Configuration Configuration { get; init; }
-    public WindowSystem WindowSystem = new("Aetherle");
+    public WindowSystem WindowSystem { get; init; }
 
     public ConfigWindow ConfigWindow { get; init; }
     public static MainWindow MainWindow { get; private set; } = null!;
     public StatsWindow StatsWindow { get; init; }
     public AboutWindow AboutWindow { get; init; }
 
-    public DailyPuzzle CurrentPuzzle { get; private set; } = new();
+    public DailyPuzzle CurrentPuzzle { get; private set; }
     public GameSessionService SessionService { get; init; }
     public InputPollingService InputService { get; init; }
     public DailyPuzzleService PuzzleService { get; init; }
@@ -51,10 +51,12 @@ public sealed class Plugin : IDalamudPlugin
         PuzzleService = new DailyPuzzleService(Data, new RemoteWordProvider());
 
         Infrastructure.Time.UtcResetService.CheckAndResetDailyLimits(Configuration);
+        WindowSystem = new WindowSystem("Aetherle");
         ConfigWindow = new ConfigWindow(this);
         MainWindow = new MainWindow(this);
         StatsWindow = new StatsWindow(this);
         AboutWindow = new AboutWindow();
+        CurrentPuzzle = new DailyPuzzle();
 
         this.SessionService = new GameSessionService(this);
         this.InputService = new InputPollingService(this, Framework, KeyState);

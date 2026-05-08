@@ -7,16 +7,22 @@ using Aetherle.Core.Models;
 
 namespace Aetherle.Infrastructure.Data;
 
-public class DataManager(string configDir)
+public class DataManager
 {
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
-    public string ConfigDirectory => configDir;
-    private readonly string cachePath = Path.Combine(configDir, "daily_cache.json");
+    public string ConfigDirectory { get; }
+    private readonly string cachePath;
+
+    public DataManager(string configDir)
+    {
+        ConfigDirectory = configDir;
+        cachePath = Path.Combine(configDir, "daily_cache.json");
+    }
     private List<string> wordList = new();
 
     public List<string> GetAllWords()
     {
-        return this.wordList ?? new System.Collections.Generic.List<string>();
+        return this.wordList ?? new List<string>();
     }
 
     public async Task<List<string>> LoadBackupWordsAsync()
