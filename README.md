@@ -1,7 +1,10 @@
 # Aetherle
 
 Aetherle is a Wordle-style daily word puzzle plugin for Final Fantasy XIV using Dalamud.
-![Aetherle Screenshot](example.png)
+<p align="center">
+  <img src="example.png" alt="Aetherle Screenshot" width="45%" />
+  <img src="pinkle.PNG" alt="Aetherle Pink Theme" width="45%" />
+</p>
 
 ## About
 
