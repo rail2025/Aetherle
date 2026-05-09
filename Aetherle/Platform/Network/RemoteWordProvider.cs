@@ -17,7 +17,7 @@ public class RemoteWordProvider
     {
         try
         {
-            var response = await client.GetStringAsync("https://rail2025.github.io/puzzle.json");
+            var response = await client.GetStringAsync("https://puzzle.aetherdraw.me");
             var puzzle = JsonSerializer.Deserialize<DailyPuzzle>(response);
             return puzzle ?? throw new Exception("Failed to deserialize remote puzzle.");
         }
